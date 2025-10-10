@@ -82,7 +82,7 @@ function BentoBox<T>({ children, className }: BentoBoxProps<T>) {
         setHoveredItem,
       }}
     >
-      <div className={cn("w-dvw h-dvh relative isolate", className)}>
+      <div className={cn("relative isolate h-dvh w-dvw", className)}>
         {children}
       </div>
     </BentoContext.Provider>
@@ -95,11 +95,11 @@ interface BentoGridProps<T> extends VariantProps<typeof bentoGridVariants> {
   className?: string;
 }
 
-function BentoGrid<T>({ 
-  items, 
-  children, 
-  columns, 
-  className 
+function BentoGrid<T>({
+  items,
+  children,
+  columns,
+  className,
 }: BentoGridProps<T>) {
   return (
     <div className="p-6">
@@ -177,7 +177,7 @@ function BentoModal<T>({ children, className }: BentoModalProps<T>) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={() => setSelectedItem(null)}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
         >
           <motion.div
             key={`detail-${selectedItem.id}`}
@@ -188,7 +188,7 @@ function BentoModal<T>({ children, className }: BentoModalProps<T>) {
             transition={{ duration: 0.4, ease: "easeInOut" }}
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              "relative overflow-hidden rounded-2xl cursor-default max-w-4xl w-full shadow-2xl",
+              "relative w-full max-w-4xl cursor-default overflow-hidden rounded-2xl shadow-2xl",
               selectedItem.color,
               className
             )}
@@ -209,11 +209,11 @@ interface DefaultBentoCardProps<T> {
   category?: keyof T;
 }
 
-function DefaultBentoCard<T>({ 
-  item, 
-  title = "title" as keyof T, 
+function DefaultBentoCard<T>({
+  item,
+  title = "title" as keyof T,
   description = "description" as keyof T,
-  category = "category" as keyof T
+  category = "category" as keyof T,
 }: DefaultBentoCardProps<T>) {
   const { hoveredItem } = useBentoContext<T>();
 
@@ -221,13 +221,13 @@ function DefaultBentoCard<T>({
     <>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-white/20"></div>
-        <div className="absolute bottom-4 left-4 w-8 h-8 rounded-full bg-white/20"></div>
+        <div className="absolute top-4 right-4 h-16 w-16 rounded-full bg-white/20"></div>
+        <div className="absolute bottom-4 left-4 h-8 w-8 rounded-full bg-white/20"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 p-6 h-full flex flex-col">
-        <div className="flex items-center justify-between mb-4">
+      <div className="relative z-10 flex h-full flex-col p-6">
+        <div className="mb-4 flex items-center justify-between">
           <motion.div
             animate={{
               rotate: hoveredItem === item.id ? 360 : 0,
@@ -242,7 +242,7 @@ function DefaultBentoCard<T>({
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xs font-medium bg-white/20 px-2 py-1 rounded-full"
+            className="rounded-full bg-white/20 px-2 py-1 text-xs font-medium"
           >
             {String(item[category])}
           </motion.span>
@@ -252,7 +252,7 @@ function DefaultBentoCard<T>({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-lg font-semibold text-white mb-2"
+          className="mb-2 text-lg font-semibold text-white"
         >
           {String(item[title])}
         </motion.h3>
@@ -261,7 +261,7 @@ function DefaultBentoCard<T>({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-white/80 text-sm leading-relaxed flex-1"
+          className="flex-1 text-sm leading-relaxed text-white/80"
         >
           {String(item[description])}
         </motion.p>
@@ -304,19 +304,23 @@ interface DefaultBentoModalProps<T> {
   integrations?: string[];
 }
 
-function DefaultBentoModal<T>({ 
-  item, 
+function DefaultBentoModal<T>({
+  item,
   title = "title" as keyof T,
   description = "description" as keyof T,
   category = "category" as keyof T,
-  features = ["Advanced analytics", "Real-time monitoring", "Custom dashboards"],
+  features = [
+    "Advanced analytics",
+    "Real-time monitoring",
+    "Custom dashboards",
+  ],
   benefits = ["Increased efficiency", "Better insights", "Cost savings"],
-  integrations = ["API access", "Webhook support", "Third-party tools"]
+  integrations = ["API access", "Webhook support", "Third-party tools"],
 }: DefaultBentoModalProps<T>) {
   return (
     <div className="relative z-10 p-8 md:p-12">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="mb-8 flex items-center justify-between">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -329,7 +333,7 @@ function DefaultBentoModal<T>({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-sm font-medium bg-white/20 px-4 py-2 rounded-full"
+          className="rounded-full bg-white/20 px-4 py-2 text-sm font-medium"
         >
           {String(item[category])}
         </motion.span>
@@ -340,7 +344,7 @@ function DefaultBentoModal<T>({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-4xl md:text-5xl font-bold text-white mb-6"
+        className="mb-6 text-4xl font-bold text-white md:text-5xl"
       >
         {String(item[title])}
       </motion.h1>
@@ -349,7 +353,7 @@ function DefaultBentoModal<T>({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl"
+        className="mb-8 max-w-2xl text-lg leading-relaxed text-white/90 md:text-xl"
       >
         {String(item[description])}
       </motion.p>
@@ -359,27 +363,27 @@ function DefaultBentoModal<T>({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+        className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3"
       >
-        <div className="bg-white/10 rounded-xl p-6">
-          <h3 className="text-white font-semibold mb-2">Features</h3>
-          <ul className="text-white/80 space-y-1">
+        <div className="rounded-xl bg-white/10 p-6">
+          <h3 className="mb-2 font-semibold text-white">Features</h3>
+          <ul className="space-y-1 text-white/80">
             {features.map((feature, index) => (
               <li key={index}>• {feature}</li>
             ))}
           </ul>
         </div>
-        <div className="bg-white/10 rounded-xl p-6">
-          <h3 className="text-white font-semibold mb-2">Benefits</h3>
-          <ul className="text-white/80 space-y-1">
+        <div className="rounded-xl bg-white/10 p-6">
+          <h3 className="mb-2 font-semibold text-white">Benefits</h3>
+          <ul className="space-y-1 text-white/80">
             {benefits.map((benefit, index) => (
               <li key={index}>• {benefit}</li>
             ))}
           </ul>
         </div>
-        <div className="bg-white/10 rounded-xl p-6">
-          <h3 className="text-white font-semibold mb-2">Integration</h3>
-          <ul className="text-white/80 space-y-1">
+        <div className="rounded-xl bg-white/10 p-6">
+          <h3 className="mb-2 font-semibold text-white">Integration</h3>
+          <ul className="space-y-1 text-white/80">
             {integrations.map((integration, index) => (
               <li key={index}>• {integration}</li>
             ))}
@@ -397,14 +401,14 @@ function DefaultBentoModal<T>({
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-white text-gray-800 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+          className="rounded-xl bg-white px-6 py-3 font-semibold text-gray-800 transition-colors hover:bg-gray-100"
         >
           Learn More
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-white/20 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/30 transition-colors"
+          className="rounded-xl bg-white/20 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/30"
         >
           Get Started
         </motion.button>

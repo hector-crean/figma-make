@@ -23,7 +23,8 @@ const projects: BentoItem<ProjectItem>[] = [
   {
     id: "1",
     title: "Design System",
-    description: "Comprehensive design tokens and component library for consistent UI development.",
+    description:
+      "Comprehensive design tokens and component library for consistent UI development.",
     icon: "🎨",
     color: "bg-gradient-to-br from-purple-500 to-pink-500",
     size: "large",
@@ -67,7 +68,8 @@ const projects: BentoItem<ProjectItem>[] = [
   {
     id: "5",
     title: "User Research",
-    description: "Comprehensive user interviews and usability testing insights.",
+    description:
+      "Comprehensive user interviews and usability testing insights.",
     icon: "👥",
     color: "bg-gradient-to-br from-indigo-500 to-purple-500",
     size: "small",
@@ -78,7 +80,8 @@ const projects: BentoItem<ProjectItem>[] = [
   {
     id: "6",
     title: "Performance Monitor",
-    description: "Application performance monitoring and optimization recommendations.",
+    description:
+      "Application performance monitoring and optimization recommendations.",
     icon: "⚡",
     color: "bg-gradient-to-br from-yellow-500 to-orange-500",
     size: "small",
@@ -103,7 +106,7 @@ export default function BentoBoxExample() {
             item={item}
             features={[
               "Advanced analytics",
-              "Real-time monitoring", 
+              "Real-time monitoring",
               "Custom dashboards",
               "Team collaboration",
             ]}
@@ -115,7 +118,7 @@ export default function BentoBoxExample() {
             ]}
             integrations={[
               "API access",
-              "Webhook support", 
+              "Webhook support",
               "Third-party tools",
               "Slack integration",
             ]}
@@ -132,24 +135,22 @@ export function CustomBentoExample() {
     <BentoBox<ProjectItem>>
       <BentoGrid<ProjectItem> items={projects} columns={3}>
         {(item, index) => (
-          <div className="p-6 h-full flex flex-col">
-            <div className="flex items-center justify-between mb-4">
+          <div className="flex h-full flex-col p-6">
+            <div className="mb-4 flex items-center justify-between">
               <div className="text-3xl">{item.icon}</div>
-              <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
+              <span className="rounded-full bg-white/20 px-2 py-1 text-xs">
                 {item.category}
               </span>
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="mb-2 text-lg font-semibold text-white">
               {item.title}
             </h3>
-            <p className="text-white/80 text-sm flex-1">
-              {item.description}
-            </p>
+            <p className="flex-1 text-sm text-white/80">{item.description}</p>
             <div className="mt-4 flex gap-2">
               {item.team.slice(0, 3).map((member: string, i: number) => (
                 <div
                   key={i}
-                  className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-xs"
+                  className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-xs"
                 >
                   {member[0]}
                 </div>
@@ -162,10 +163,10 @@ export function CustomBentoExample() {
       <BentoModal<ProjectItem>>
         {(item) => (
           <div className="p-8">
-            <div className="flex items-center justify-between mb-8">
+            <div className="mb-8 flex items-center justify-between">
               <div className="text-6xl">{item.icon}</div>
               <div className="text-right">
-                <div className="text-sm bg-white/20 px-3 py-1 rounded-full mb-2">
+                <div className="mb-2 rounded-full bg-white/20 px-3 py-1 text-sm">
                   {item.category}
                 </div>
                 <div className="text-xs text-white/60">
@@ -174,38 +175,36 @@ export function CustomBentoExample() {
               </div>
             </div>
 
-            <h1 className="text-4xl font-bold text-white mb-6">
-              {item.title}
-            </h1>
+            <h1 className="mb-6 text-4xl font-bold text-white">{item.title}</h1>
 
-            <p className="text-white/90 text-lg mb-8">
-              {item.description}
-            </p>
+            <p className="mb-8 text-lg text-white/90">{item.description}</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-white/10 rounded-xl p-6">
-                <h3 className="text-white font-semibold mb-4">Team Members</h3>
+            <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="rounded-xl bg-white/10 p-6">
+                <h3 className="mb-4 font-semibold text-white">Team Members</h3>
                 <div className="flex flex-wrap gap-2">
                   {item.team.map((member: string, index: number) => (
                     <span
                       key={index}
-                      className="bg-white/20 px-3 py-1 rounded-full text-sm"
+                      className="rounded-full bg-white/20 px-3 py-1 text-sm"
                     >
                       {member}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="bg-white/10 rounded-xl p-6">
-                <h3 className="text-white font-semibold mb-4">Project Status</h3>
+              <div className="rounded-xl bg-white/10 p-6">
+                <h3 className="mb-4 font-semibold text-white">
+                  Project Status
+                </h3>
                 <div className="flex items-center gap-2">
                   <div
-                    className={`w-3 h-3 rounded-full ${
+                    className={`h-3 w-3 rounded-full ${
                       item.status === "active"
                         ? "bg-green-400"
                         : item.status === "completed"
-                        ? "bg-blue-400"
-                        : "bg-yellow-400"
+                          ? "bg-blue-400"
+                          : "bg-yellow-400"
                     }`}
                   />
                   <span className="text-white capitalize">{item.status}</span>
@@ -214,10 +213,10 @@ export function CustomBentoExample() {
             </div>
 
             <div className="flex gap-4">
-              <button className="bg-white text-gray-800 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors">
+              <button className="rounded-xl bg-white px-6 py-3 font-semibold text-gray-800 transition-colors hover:bg-gray-100">
                 View Details
               </button>
-              <button className="bg-white/20 text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/30 transition-colors">
+              <button className="rounded-xl bg-white/20 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/30">
                 Edit Project
               </button>
             </div>

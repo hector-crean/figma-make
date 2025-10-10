@@ -1,9 +1,11 @@
-import TabsLayout from "@/layouts/tabs-layout"
+import TabsLayout from "@/layouts/tabs-layout";
 
 const Page = () => {
-    return <div className="flex justify-center items-center min-h-screen">
-        <TabsLayout />
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <TabsLayout />
     </div>
-}
+  );
+};
 
-export default Page
+export default Page;
