@@ -1,4 +1,4 @@
-import TabsLayout from "@/layouts/tabs-layout";
+import TabsLayout from "@/components/layout/tabs-layout";
 
 const Page = () => {
   return (

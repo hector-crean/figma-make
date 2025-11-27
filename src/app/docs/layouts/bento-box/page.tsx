@@ -3,11 +3,11 @@
 import {
   BentoBox,
   BentoGrid,
+  BentoItem,
   BentoModal,
   DefaultBentoCard,
   DefaultBentoModal,
-  BentoItem,
-} from "@/layouts/bento-box-layout";
+} from "@/components/layout/bento-box-layout";
 
 // Define your data type
 interface ProjectItem {
@@ -199,13 +199,12 @@ export function CustomBentoExample() {
                 </h3>
                 <div className="flex items-center gap-2">
                   <div
-                    className={`h-3 w-3 rounded-full ${
-                      item.status === "active"
+                    className={`h-3 w-3 rounded-full ${item.status === "active"
                         ? "bg-green-400"
                         : item.status === "completed"
                           ? "bg-blue-400"
                           : "bg-yellow-400"
-                    }`}
+                      }`}
                   />
                   <span className="text-white capitalize">{item.status}</span>
                 </div>

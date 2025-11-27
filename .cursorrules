@@ -1,0 +1,153 @@
+# Page Structure & Component Rules
+
+## Critical Rules
+
+1. **NEVER use raw HTML elements for semantic content:**
+   - Use `H1`, `H2`, `H3`, `Section` from `@/components/content/heading` instead of `<h1>`, `<h2>`, etc.
+   - Always provide `id` props to headings for navigation and TOC generation
+
+2. **ALWAYS use Figure components for visual content:**
+   - Use `Figure`, `MultiPanelFigure`, `AnnotatedFigure`, `ComparisonFigure`, or `TimelineFigure` from `@/components/content/figure`
+   - NEVER create custom styled `<div>` elements for charts, images, diagrams, or visualizations
+   - All visual content must be wrapped in appropriate Figure components
+
+3. **ALWAYS use Citation component for references:**
+   - Use `<Citation refId="refId" />` from `@/components/content/reference`
+   - Wrap page content in `ReferencesProvider`
+   - Use `ReferencesList` at the bottom of pages
+
+4. **Use Table component for structured data:**
+   - Use `Table` from `@/components/content/table` for all data tables
+   - Choose appropriate variant: `default`, `striped`, `bordered`, `compact`, or `clinical`
+
+## Component Selection Guide
+
+### Visual Content → Figure Components
+
+- **Single chart/image/diagram** → `Figure`
+- **Multiple related visuals** → `MultiPanelFigure`
+- **Figure with callouts/explanations** → `AnnotatedFigure`
+- **Side-by-side comparison (2 items)** → `ComparisonFigure`
+- **Timeline/progression** → `TimelineFigure`
+
+### Text Content → Heading Components
+
+- **Page title** → `H1` (use only once per page)
+- **Major section** → `H2` or `Section` with `level={2}`
+- **Subsection** → `H3` or `Section` with `level={3}`
+
+### Data → Table Component
+
+- **Structured data in rows/columns** → `Table`
+
+## Standard Page Structure
+
+```tsx
+"use client";
+import {
+  ReferencesProvider,
+  Citation,
+  ReferencesList,
+  useReferences,
+} from "@/components/content/reference";
+import { H1, H2, H3, Section } from "@/components/content/heading";
+import { Figure } from "@/components/content/figure";
+import { useEffect } from "react";
+
+const pageReferences = [
+  /* reference objects */
+];
+
+function PageContent() {
+  const { addReference } = useReferences();
+  useEffect(() => {
+    pageReferences.forEach((ref) => addReference(ref));
+  }, [addReference]);
+
+  return (
+    <div className="space-y-8">
+      <H1 id="page-title">Page Title</H1>
+      <Section id="section" title="Section Title" level={2}>
+        <Figure number="1" caption="Figure caption">
+          {/* Visual content */}
+        </Figure>
+        <p>
+          Text with <Citation refId="ref1" />.
+        </p>
+      </Section>
+      <ReferencesList />
+    </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <ReferencesProvider>
+      <PageContent />
+    </ReferencesProvider>
+  );
+}
+```
+
+## Common Imports
+
+```tsx
+// Headings
+import { H1, H2, H3, Section } from "@/components/content/heading";
+
+// Figures
+import {
+  Figure,
+  MultiPanelFigure,
+  AnnotatedFigure,
+  ComparisonFigure,
+  TimelineFigure,
+} from "@/components/content/figure";
+
+// Tables
+import { Table } from "@/components/content/table";
+
+// References
+import {
+  ReferencesProvider,
+  Citation,
+  ReferencesList,
+  useReferences,
+} from "@/components/content/reference";
+
+// Accordions
+import { AccordionGroup, AccordionItem } from "@/components/content/accordion";
+```
+
+## Anti-Patterns to Avoid
+
+❌ **DON'T:**
+
+- Use raw `<div>` for figures - always use Figure components
+- Use raw `<h1>`, `<h2>`, etc. - always use H1, H2, H3 components
+- Manually format citations - always use Citation component
+- Create custom styled containers for visual content - use Figure components
+
+✅ **DO:**
+
+- Wrap all visual content in appropriate Figure components
+- Use semantic heading components with `id` props
+- Use Citation component for all references
+- Follow the standard page structure template
+
+## When Refactoring Pages
+
+1. Identify all visual content (charts, images, diagrams)
+2. Wrap each in appropriate Figure component
+3. Move caption text to `caption` prop
+4. Assign sequential figure numbers
+5. Replace raw headings with semantic heading components
+6. Replace manual citations with Citation component
+7. Ensure all headings have `id` props
+
+## Full Documentation
+
+For detailed examples and patterns, see:
+
+- `docs/page-structure-rules.md` - Complete documentation
+- `docs/component-quick-reference.md` - Quick lookup guide
