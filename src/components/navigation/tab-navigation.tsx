@@ -1,8 +1,11 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatePresence } from 'motion/react';
 import * as motion from "motion/react-client";
 import { useEffect, useRef, useState } from 'react';
+import { TabsProvider, useTabs } from './tabs-context';
+import { ReferencesList } from '../content/reference';
 
 export interface Tab {
   id: string;
@@ -21,7 +24,7 @@ interface TabNavigationProps {
 
 
 // Variant 2: Carousel with Arrow Navigation
-export function CarouselTabs({ tabs, activeTab, onTabChange }: TabNavigationProps) {
+export function CarouselTabHeader({ tabs, activeTab, onTabChange }: TabNavigationProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -64,6 +67,7 @@ export function CarouselTabs({ tabs, activeTab, onTabChange }: TabNavigationProp
         <button
           onClick={() => scroll('left')}
           className="flex-shrink-0 p-2 bg-blue-200 hover:bg-blue-300 rounded-lg transition-colors z-10"
+          aria-label="Scroll left"
         >
           <ChevronLeft size={20} className="text-slate-700" />
         </button>
@@ -112,6 +116,7 @@ export function CarouselTabs({ tabs, activeTab, onTabChange }: TabNavigationProp
         <button
           onClick={() => scroll('right')}
           className="flex-shrink-0 p-2 bg-blue-200 hover:bg-blue-300 rounded-lg transition-colors z-10"
+          aria-label="Scroll right"
         >
           <ChevronRight size={20} className="text-slate-700" />
         </button>
@@ -119,3 +124,46 @@ export function CarouselTabs({ tabs, activeTab, onTabChange }: TabNavigationProp
     </div>
   );
 }
+
+
+
+export function TabHeader() {
+  const { tabs, activeTabId, setActiveTabId } = useTabs();
+  return (
+    <CarouselTabHeader
+      tabs={tabs}
+      activeTab={activeTabId}
+      onTabChange={setActiveTabId}
+    />
+  );
+}
+
+export function TabBody() {
+  const { tabs, activeTabId } = useTabs();
+  const activeTab = tabs.find(t => t.id === activeTabId);
+  const Component = activeTab?.component || (() => <div>Tab not found</div>);
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={activeTabId}
+        initial={{ y: 10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -10, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <Component />
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+
+
+const CarouselTabs = {
+  Provider: TabsProvider,
+  Header: TabHeader,
+  Body: TabBody,
+}
+
+export { CarouselTabs };
