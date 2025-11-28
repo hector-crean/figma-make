@@ -1,8 +1,8 @@
 "use client";
 import ShellLayout from "@/components/layout/shell";
-import ADHDThroughTheYear from './ADHD_through_the_years/page';
-import GenderDifferences from './gender_differences/page';
-import PrevalenceOfADHDInTheUSA from './prevalence_of_ADHD_in_the_USA/page';
+import ADHDThroughTheYear from './ADHD_through_the_years/tab';
+import GenderDifferences from './gender_differences/tab';
+import PrevalenceOfADHDInTheUSA from './prevalence_of_ADHD_in_the_USA/tab';
 
 const tabs = [
     { id: 'ADHD_through_the_years', label: 'ADHD Through the Years', component: ADHDThroughTheYear },
@@ -14,7 +14,7 @@ const tabs = [
 const Page = () => {
 
     return (
-        <ShellLayout tabs={tabs} />
+        <ShellLayout nodeName="Epidemiology" subnodeName="Prevalence" tabs={tabs} />
     )
 }
 
